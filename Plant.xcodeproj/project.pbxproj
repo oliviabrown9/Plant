@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		753428CA212A882D0060C635 /* UIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 753428C9212A882D0060C635 /* UIConstants.swift */; };
 		755CCB57212A6CBB00D166F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755CCB56212A6CBB00D166F9 /* AppDelegate.swift */; };
 		755CCB59212A6CBB00D166F9 /* ServingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755CCB58212A6CBB00D166F9 /* ServingsViewController.swift */; };
 		755CCB5E212A6CBE00D166F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755CCB5D212A6CBE00D166F9 /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		753428C9212A882D0060C635 /* UIConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIConstants.swift; sourceTree = "<group>"; };
 		755CCB53212A6CBB00D166F9 /* Plant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Plant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		755CCB56212A6CBB00D166F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		755CCB58212A6CBB00D166F9 /* ServingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingsViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 			children = (
 				755CCB56212A6CBB00D166F9 /* AppDelegate.swift */,
 				755CCB58212A6CBB00D166F9 /* ServingsViewController.swift */,
+				753428C9212A882D0060C635 /* UIConstants.swift */,
 				755CCB5D212A6CBE00D166F9 /* Assets.xcassets */,
 				755CCB5F212A6CBE00D166F9 /* LaunchScreen.storyboard */,
 				755CCB62212A6CBE00D166F9 /* Info.plist */,
@@ -137,12 +140,8 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputFileListPaths = (
-			);
 			inputPaths = (
 				"$(SRCROOT)//Carthage/Build/iOS/SnapKit.framework",
-			);
-			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
@@ -160,6 +159,7 @@
 			files = (
 				755CCB59212A6CBB00D166F9 /* ServingsViewController.swift in Sources */,
 				755CCB57212A6CBB00D166F9 /* AppDelegate.swift in Sources */,
+				753428CA212A882D0060C635 /* UIConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
