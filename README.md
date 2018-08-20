@@ -2,7 +2,7 @@
 Track whole food, plant-based diets on iOS.
 
 ## V1.0 Plan(t)
-![designPlan](https://user-images.githubusercontent.com/20130899/44318350-4cbe1300-a3ea-11e8-91ed-e12179c7e6bf.png)
+![designPlan](https://user-images.githubusercontent.com/20130899/44318560-b0950b80-a3eb-11e8-9bf7-6b74d46fdb1b.png)
 
 ## Future
 plant will offer...
