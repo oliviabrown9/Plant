@@ -52,6 +52,7 @@ class ServingsViewController: UIViewController {
         // MARK: Table View
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
+        tableView.rowHeight = 87
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
@@ -59,6 +60,44 @@ class ServingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(25)
             make.bottom.equalTo(leafButton.snp.top).inset(-15)
         }
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+}
+
+extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 7
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell: ServingsTableViewCell? = nil
+        switch indexPath.row {
+        case 0:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell?.titleLabel.text = "leafy vegetables"
+        case 1:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell?.titleLabel.text = "other vegetables"
+        case 2:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+            cell?.titleLabel.text = "berries"
+        case 3:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3)
+            cell?.titleLabel.text = "other fruit"
+        case 4:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5)
+            cell?.titleLabel.text = "whole grains"
+        case 5:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell?.titleLabel.text = "legumes"
+        case 6:
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+            cell?.titleLabel.text = "nuts & seeds"
+        default:
+            break
+        }
+        return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
     }
 }
 

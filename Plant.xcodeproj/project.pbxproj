@@ -13,6 +13,7 @@
 		755CCB5E212A6CBE00D166F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 755CCB5D212A6CBE00D166F9 /* Assets.xcassets */; };
 		755CCB61212A6CBE00D166F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 755CCB5F212A6CBE00D166F9 /* LaunchScreen.storyboard */; };
 		75867546212A738E00A13C74 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75867545212A738E00A13C74 /* SnapKit.framework */; };
+		759477EB212A904C00578184 /* ServingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759477EA212A904C00578184 /* ServingsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		755CCB60212A6CBE00D166F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		755CCB62212A6CBE00D166F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		75867545212A738E00A13C74 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
+		759477EA212A904C00578184 /* ServingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				755CCB56212A6CBB00D166F9 /* AppDelegate.swift */,
+				759477EA212A904C00578184 /* ServingsTableViewCell.swift */,
 				755CCB58212A6CBB00D166F9 /* ServingsViewController.swift */,
 				753428C9212A882D0060C635 /* UIConstants.swift */,
 				755CCB5D212A6CBE00D166F9 /* Assets.xcassets */,
@@ -159,6 +162,7 @@
 			files = (
 				755CCB59212A6CBB00D166F9 /* ServingsViewController.swift in Sources */,
 				755CCB57212A6CBB00D166F9 /* AppDelegate.swift in Sources */,
+				759477EB212A904C00578184 /* ServingsTableViewCell.swift in Sources */,
 				753428CA212A882D0060C635 /* UIConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
