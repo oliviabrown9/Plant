@@ -97,6 +97,8 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
         default:
             break
         }
+
+        cell?.selectionStyle = .none
         return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
     }
 }
