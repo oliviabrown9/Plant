@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import CoreData
 
 class ServingsViewController: UIViewController {
 
@@ -19,6 +20,24 @@ class ServingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
+        setUpBottomButtons()
+
+        // MARK: Table View
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
+        tableView.rowHeight = 87
+        view.addSubview(tableView)
+
+        tableView.snp.makeConstraints { make in
+            make.width.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(25)
+            make.bottom.equalTo(leafButton.snp.top).inset(-15)
+        }
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+
+    private func setUpBottomButtons() {
         // MARK: Leaf Button
         leafButton.setImage(#imageLiteral(resourceName: "leafInUse") , for: .disabled)
         leafButton.isEnabled = false
@@ -48,20 +67,6 @@ class ServingsViewController: UIViewController {
             make.centerY.equalTo(calendarButton)
 
         }
-
-        // MARK: Table View
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.rowHeight = 87
-        view.addSubview(tableView)
-
-        tableView.snp.makeConstraints { make in
-            make.width.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(25)
-            make.bottom.equalTo(leafButton.snp.top).inset(-15)
-        }
-        tableView.dataSource = self
-        tableView.delegate = self
     }
 }
 
@@ -100,6 +105,11 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell?.selectionStyle = .none
         return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.servingsManager.save(numServings: 1, for: "leafyVegetables")
     }
 }
 
