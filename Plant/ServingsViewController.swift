@@ -17,7 +17,7 @@ class ServingsViewController: UIViewController {
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
-    private var currentServings: DailyServing!
+    private var currentServings: DailyServing?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class ServingsViewController: UIViewController {
         tableView.delegate = self
 
         currentServings = appDelegate.servingsManager.fetchToday()
-        print(currentServings.date)
+        print(currentServings?.date)
     }
 
     private func setUpBottomButtons() {
@@ -113,6 +113,7 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let currentServings = currentServings else { return }
         switch indexPath.row {
         case 0:
             appDelegate.servingsManager.save(numServings: currentServings.leafyVegetables + Int16(1), for: "leafyVegetables")
