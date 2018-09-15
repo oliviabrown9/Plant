@@ -35,7 +35,7 @@ class ServingsTableViewCell: UITableViewCell {
         for _ in 0..<numSections {
             let trackerSubview = UIView()
             if numToFill > 0 {
-                trackerSubview.backgroundColor = .red
+                trackerSubview.backgroundColor = UIConstants.colors.enabledGreen
                 numToFill -= 1
             } else {
                 trackerSubview.backgroundColor = UIConstants.colors.disabledGreen

@@ -117,7 +117,6 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row {
         case 0:
             appDelegate.servingsManager.addServing(to: currentServings.leafyVegetables, for: "leafyVegetables")
-//            appDelegate.servingsManager.save(numServings: currentServings.leafyVegetables, for: "leafyVegetables")
         case 1:
             appDelegate.servingsManager.addServing(to: currentServings.otherVegetables, for: "otherVegetables")
         case 2:
@@ -131,11 +130,9 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
         case 6:
             appDelegate.servingsManager.addServing(to: currentServings.nutsAndSeeds, for: "nutsAndSeeds")
         default:
-            // Unknown cell
-            fatalError()
+            fatalError() // Unknown cell
         }
         tableView.reloadData()
-        print(appDelegate.servingsManager.servingsHistory)
     }
 }
 
