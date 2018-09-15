@@ -156,27 +156,20 @@ class ServingsManager {
         let lastSevenDailyServings = servingsHistory.suffix(8)
         let lastWeekDates = getLastWeekDates()
         var averageServing = 0.0
+        let types = ServingTypes()
 
         for day in lastWeekDates {
             for serving in lastSevenDailyServings {
                 if Calendar.current.isDate(day, inSameDayAs:serving.date!) {
                     switch type {
-                    case "leafyVegetables":
-                        averageServing += Double(serving.leafyVegetables)
-                    case "otherVegetables":
-                        averageServing += Double(serving.otherVegetables)
-                    case "berries":
-                        averageServing += Double(serving.berries)
-                    case "otherFruit":
-                        averageServing += Double(serving.otherFruit)
-                    case "wholeGrains":
-                        averageServing += Double(serving.wholeGrains)
-                    case "legumes":
-                        averageServing += Double(serving.legumes)
-                    case "nutsAndSeeds":
-                        averageServing += Double(serving.nutsAndSeeds)
-                    default:
-                        break
+                    case types.leafyVegetables().key: averageServing += Double(serving.leafyVegetables)
+                    case types.otherVegetables().key: averageServing += Double(serving.otherVegetables)
+                    case types.berries().key: averageServing += Double(serving.berries)
+                    case types.otherFruit().key: averageServing += Double(serving.otherFruit)
+                    case types.wholeGrains().key: averageServing += Double(serving.wholeGrains)
+                    case types.legumes().key: averageServing += Double(serving.legumes)
+                    case types.nutsAndSeeds().key: averageServing += Double(serving.nutsAndSeeds)
+                    default: break
                     }
                 }
             }
