@@ -16,4 +16,13 @@ class UIConstants {
         static let disabledGreen = #colorLiteral(red: 0.2862745098, green: 0.7294117647, blue: 0.3607843137, alpha: 1)
 //            UIColor(red:0.29, green:0.73, blue:0.36, alpha:1.0)
     }
+
+    struct layout {
+        static let tableViewHeight: CGFloat = 87
+        static let tableViewTopInset: CGFloat = 25
+        static let tableViewBottomInset: CGFloat = -15
+        static let leafBottomOffset: CGFloat = 21
+        static let sideButtonEdgeInset: CGFloat = 15
+        static let sideButtonBottomInset: CGFloat = 50
+    }
 }

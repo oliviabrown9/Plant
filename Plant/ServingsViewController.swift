@@ -25,13 +25,13 @@ class ServingsViewController: UIViewController {
         // MARK: Table View
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
-        tableView.rowHeight = 87
+        tableView.rowHeight = UIConstants.layout.tableViewHeight
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(25)
-            make.bottom.equalTo(leafButton.snp.top).inset(-15)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(UIConstants.layout.tableViewTopInset)
+            make.bottom.equalTo(leafButton.snp.top).inset(UIConstants.layout.tableViewBottomInset)
         }
         tableView.dataSource = self
         tableView.delegate = self
@@ -45,7 +45,7 @@ class ServingsViewController: UIViewController {
 
         leafButton.snp.makeConstraints { make in
             make.bottom.lessThanOrEqualToSuperview().priority(.required)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(21).priority(.medium)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(UIConstants.layout.leafBottomOffset).priority(.medium)
             make.centerX.equalToSuperview()
         }
 
@@ -54,8 +54,8 @@ class ServingsViewController: UIViewController {
         view.addSubview(calendarButton)
 
         calendarButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(15)
-            make.bottom.equalToSuperview().inset(50)
+            make.leading.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
+            make.bottom.equalToSuperview().inset(UIConstants.layout.sideButtonBottomInset)
         }
 
         // MARK: Settings Button
@@ -63,7 +63,7 @@ class ServingsViewController: UIViewController {
         view.addSubview(settingsButton)
 
         settingsButton.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(15)
+            make.trailing.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
             make.centerY.equalTo(calendarButton)
 
         }
