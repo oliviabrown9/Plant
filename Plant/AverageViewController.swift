@@ -44,7 +44,7 @@ class AverageViewController: UIViewController {
 
         averageLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(50)
+            make.top.equalTo(titleLabel.snp.bottom).offset(40)
         }
 
         let captionLabel = UILabel()
@@ -58,6 +58,17 @@ class AverageViewController: UIViewController {
             make.top.equalTo(averageLabel.snp.bottom)
         }
 
+        let dividerView = UIView()
+        view.addSubview(dividerView)
+        dividerView.backgroundColor = UIConstants.colors.disabledGreen
+
+        dividerView.snp.makeConstraints { make in
+            make.height.equalTo(5)
+            make.width.equalTo(345)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(captionLabel.snp.bottom).offset(30)
+        }
+
         // MARK: Table View
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
@@ -66,7 +77,7 @@ class AverageViewController: UIViewController {
 
         tableView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
-            make.top.equalTo(captionLabel.snp.bottom).offset(30)
+            make.top.equalTo(dividerView.snp.bottom)
             make.bottom.equalTo(leafButton.snp.top).inset(UIConstants.layout.tableViewBottomInset)
         }
         tableView.dataSource = self
