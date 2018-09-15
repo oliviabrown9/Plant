@@ -11,6 +11,7 @@ import UIKit
 class ServingsTableViewCell: UITableViewCell {
     let titleLabel = UILabel()
     var tracker: UIStackView?
+    var identifier: String!
 
     init(style: UITableViewCellStyle, reuseIdentifier: String?, numSections: Int) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

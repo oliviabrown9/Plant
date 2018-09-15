@@ -17,6 +17,7 @@ class ServingsViewController: UIViewController {
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
+    private var currentServings: DailyServing!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +38,7 @@ class ServingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        guard let currentServings = appDelegate.servingsManager.fetchToday() else { fatalError() }
+        currentServings = appDelegate.servingsManager.fetchToday()
         print(currentServings.date)
     }
 
@@ -112,7 +113,25 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        appDelegate.servingsManager.save(numServings: 1, for: "leafyVegetables")
+        switch indexPath.row {
+        case 0:
+            appDelegate.servingsManager.save(numServings: currentServings.leafyVegetables + Int16(1), for: "leafyVegetables")
+        case 1:
+            appDelegate.servingsManager.save(numServings: currentServings.otherVegetables + Int16(1), for: "otherVegetables")
+        case 2:
+            appDelegate.servingsManager.save(numServings: currentServings.berries + Int16(1), for: "berries")
+        case 3:
+            appDelegate.servingsManager.save(numServings: currentServings.otherFruit + Int16(1), for: "otherFruit")
+        case 4:
+            appDelegate.servingsManager.save(numServings: currentServings.wholeGrains + Int16(1), for: "wholeGrains")
+        case 5:
+            appDelegate.servingsManager.save(numServings: currentServings.legumes + Int16(1), for: "legumes")
+        case 6:
+            appDelegate.servingsManager.save(numServings: currentServings.nutsAndSeeds + Int16(1), for: "nutsAndSeeds")
+        default:
+            // Unknown cell
+            fatalError()
+        }
     }
 }
 

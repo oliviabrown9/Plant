@@ -22,13 +22,12 @@ class ServingsManager {
         addNewDailyServing()
     }
 
-    func save(numServings: Int, for servingType: String) {
+    func save(numServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
         serving.setValue(numServings, forKey: servingType)
 
         do {
             try managedContext.save()
-            servingsHistory.append(serving)
         } catch let error as NSError {
             print("Failed to save with error: \(error), \(error.userInfo)")
         }
