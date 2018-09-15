@@ -69,7 +69,7 @@ class ServingsManager {
         }
     }
 
-    private func getMaxServings(for servingType: String) -> Int {
+    func getMaxServings(for servingType: String) -> Int {
         switch servingType {
         case "leafyVegetables":
             return defaultMaxServings.leafyVegetables
