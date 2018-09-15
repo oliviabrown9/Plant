@@ -23,14 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.makeKeyAndVisible()
 
         // Set original default values for max servings
-        let servingsDefaults = [ServingsManager.ServingsKey.leafyVegetables: 2,
-                           ServingsManager.ServingsKey.otherVegetables: 2,
-                           ServingsManager.ServingsKey.berries: 1,
-                           ServingsManager.ServingsKey.otherFruit: 3,
-                           ServingsManager.ServingsKey.wholeGrains: 5,
-                           ServingsManager.ServingsKey.legumes: 2,
-                           ServingsManager.ServingsKey.nutsAndSeeds: 1]
-        UserDefaults.standard.register(defaults: servingsDefaults)
+        var servingDefaults = [String:Int]()
+        servingsManager.allServingTypes.forEach { servingDefaults[$0.key] = $0.defaultMax }
+        UserDefaults.standard.register(defaults: servingDefaults)
         return true
     }
 

@@ -17,6 +17,7 @@
 		7571BC70214D29F6002DC41F /* AverageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571BC6F214D29F6002DC41F /* AverageViewController.swift */; };
 		7571BC72214D2D34002DC41F /* CustomTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571BC71214D2D34002DC41F /* CustomTransitions.swift */; };
 		7571BC76214D3EF1002DC41F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571BC75214D3EF1002DC41F /* SettingsViewController.swift */; };
+		7571BC78214D9D23002DC41F /* ServingType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7571BC77214D9D23002DC41F /* ServingType.swift */; };
 		75867546212A738E00A13C74 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75867545212A738E00A13C74 /* SnapKit.framework */; };
 		759477EB212A904C00578184 /* ServingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759477EA212A904C00578184 /* ServingsTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		7571BC6F214D29F6002DC41F /* AverageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AverageViewController.swift; sourceTree = "<group>"; };
 		7571BC71214D2D34002DC41F /* CustomTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTransitions.swift; sourceTree = "<group>"; };
 		7571BC75214D3EF1002DC41F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		7571BC77214D9D23002DC41F /* ServingType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingType.swift; sourceTree = "<group>"; };
 		75867545212A738E00A13C74 /* SnapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SnapKit.framework; path = Carthage/Build/iOS/SnapKit.framework; sourceTree = "<group>"; };
 		759477EA212A904C00578184 /* ServingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServingsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -77,6 +79,7 @@
 				7571BC75214D3EF1002DC41F /* SettingsViewController.swift */,
 				7571BC71214D2D34002DC41F /* CustomTransitions.swift */,
 				7571BC6D214C6872002DC41F /* ServingsManager.swift */,
+				7571BC77214D9D23002DC41F /* ServingType.swift */,
 				753428C9212A882D0060C635 /* UIConstants.swift */,
 				755CCB5D212A6CBE00D166F9 /* Assets.xcassets */,
 				755CCB5F212A6CBE00D166F9 /* LaunchScreen.storyboard */,
@@ -183,6 +186,7 @@
 				7571BC6C214C62CB002DC41F /* ServingsData.xcdatamodeld in Sources */,
 				7571BC6E214C6872002DC41F /* ServingsManager.swift in Sources */,
 				753428CA212A882D0060C635 /* UIConstants.swift in Sources */,
+				7571BC78214D9D23002DC41F /* ServingType.swift in Sources */,
 				7571BC76214D3EF1002DC41F /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

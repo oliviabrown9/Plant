@@ -9,16 +9,22 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
+
+    private let titleLabel = UILabel()
+    private let captionLabel = UILabel()
     private let leafButton = UIButton()
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
+    private let dividerView = UIView()
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
+    private var currTypeIndex = 0
+    private var currServingType: ServingType!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
+        currServingType = appDelegate.servingsManager.allServingTypes[currTypeIndex]
 
-        let titleLabel = UILabel()
         titleLabel.text = "Settings"
         titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
         titleLabel.textColor = .white
@@ -29,6 +35,39 @@ class SettingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
+        view.addSubview(dividerView)
+        dividerView.backgroundColor = UIConstants.colors.disabledGreen
+
+        dividerView.snp.makeConstraints { make in
+            make.height.equalTo(5)
+            make.width.equalTo(345)
+            make.centerX.equalToSuperview()
+            make.top.equalTo(captionLabel.snp.bottom).offset(40)
+        }
+
+        setUpAboutSection()
+        setUpBottomButtons()
+    }
+
+    @objc func displayServings() {
+        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
+        navigationController?.popToRootViewController(animated: false)
+    }
+
+    @objc func displayAverage() {
+        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
+        navigationController?.pushViewController(AverageViewController(), animated: false)
+    }
+
+    @objc func plusTapped() {
+
+    }
+
+    @objc func minusTapped() {
+
+    }
+
+    private func setUpServingsUI() {
         let servingLabel = UILabel()
         servingLabel.text = "\(appDelegate.servingsManager.getMaxServings(for: "leafyVegetables"))"
         servingLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
@@ -62,7 +101,6 @@ class SettingsViewController: UIViewController {
             make.centerY.equalTo(servingLabel)
         }
 
-        let captionLabel = UILabel()
         captionLabel.text = "leafy vegetables"
         captionLabel.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
         captionLabel.textColor = .white
@@ -72,18 +110,9 @@ class SettingsViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.top.equalTo(servingLabel.snp.bottom)
         }
+    }
 
-        let dividerView = UIView()
-        view.addSubview(dividerView)
-        dividerView.backgroundColor = UIConstants.colors.disabledGreen
-
-        dividerView.snp.makeConstraints { make in
-            make.height.equalTo(5)
-            make.width.equalTo(345)
-            make.centerX.equalToSuperview()
-            make.top.equalTo(captionLabel.snp.bottom).offset(40)
-        }
-
+    private func setUpAboutSection() {
         let aboutTitleLabel = UILabel()
         aboutTitleLabel.text = "About"
         aboutTitleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -125,8 +154,6 @@ class SettingsViewController: UIViewController {
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(15)
             make.top.equalTo(aboutLabel.snp.bottom).offset(25)
         }
-
-        setUpBottomButtons()
     }
 
     private func setUpBottomButtons() {
@@ -162,15 +189,4 @@ class SettingsViewController: UIViewController {
 
         }
     }
-
-    @objc func displayServings() {
-        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
-        navigationController?.popToRootViewController(animated: false)
-    }
-
-    @objc func displayAverage() {
-        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
-        navigationController?.pushViewController(AverageViewController(), animated: false)
-    }
-
 }

@@ -11,23 +11,6 @@ import UIKit
 import CoreData
 
 class ServingsManager {
-    struct ServingsKey {
-        static let leafyVegetables = "leafyVegetables"
-        static let otherVegetables = "otherVegetables"
-        static let berries = "berries"
-        static let otherFruit = "otherFruit"
-        static let wholeGrains = "wholeGrains"
-        static let legumes = "legumes"
-        static let nutsAndSeeds = "nutsAndSeeds"
-
-        static let allPossibleTypes = [leafyVegetables,
-                                       otherVegetables,
-                                       berries,
-                                       otherFruit,
-                                       wholeGrains,
-                                       legumes,
-                                       nutsAndSeeds]
-    }
 
     struct AverageServing {
         var leafyVegetables: Double
@@ -51,6 +34,16 @@ class ServingsManager {
             self.totalCompleted = totalCompleted
         }
     }
+
+    let allServingTypes: [ServingType] = [
+        ServingTypes().leafyVegetables(),
+        ServingTypes().otherVegetables(),
+        ServingTypes().berries(),
+        ServingTypes().otherFruit(),
+        ServingTypes().wholeGrains(),
+        ServingTypes().legumes(),
+        ServingTypes().nutsAndSeeds()
+    ]
 
     private var servingsHistory = [DailyServing]()
     private var managedContext: NSManagedObjectContext? = nil
@@ -129,7 +122,7 @@ class ServingsManager {
         let nutsAndSeeds = getAverage(for: "nutsAndSeeds")
         let totalCompleted = leafyVegetables + otherVegetables + berries + otherFruit + wholeGrains + legumes + nutsAndSeeds
         var totalPossible = 0.0
-        ServingsManager.ServingsKey.allPossibleTypes.forEach { totalPossible += Double(getMaxServings(for: $0)) }
+        allServingTypes.forEach { totalPossible += Double(getMaxServings(for: $0.key)) }
 
         return AverageServing(leafyVegetables: leafyVegetables,
                               otherVegetables: otherVegetables,
