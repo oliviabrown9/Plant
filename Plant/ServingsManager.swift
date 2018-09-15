@@ -21,6 +21,38 @@ class ServingsManager {
         static let nutsAndSeeds = 1
     }
 
+    struct averageServing {
+        var leafyVegetables: Double
+        var otherVegetables: Double
+        var berries: Double
+        var otherFruit: Double
+        var wholeGrains: Double
+        var legumes: Double
+        var nutsAndSeeds: Double
+//
+//        init() {
+//
+//        }
+//
+//        private func getAverage(for type: String) {
+//            let lastSevenDailyServings =
+//        }
+
+        private func getLastWeekDates() -> [Date] {
+            let calendar = Calendar.current
+            var startDate = Date()
+            var lastWeekDates = [Date]()
+            for _ in 1...7 {
+                guard let nextDay = calendar.date(byAdding: .day, value: -1, to: startDate) else { fatalError() }
+                lastWeekDates.append(nextDay)
+                startDate = nextDay
+            }
+            print(lastWeekDates)
+            return lastWeekDates
+        }
+
+    }
+
     var servingsHistory = [DailyServing]()
     private var managedContext: NSManagedObjectContext? = nil
     private var appDelegate: AppDelegate? = nil
@@ -107,5 +139,9 @@ class ServingsManager {
         serving.setValue(Date(), forKey: "date")
         servingsHistory.append(serving)
     }
-    
+
+//    func getAverageServings() ->  {
+//
+//    }
+
 }

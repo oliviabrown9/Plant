@@ -17,7 +17,6 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
         setUpBottomButtons()
-        
     }
 
     private func setUpBottomButtons() {
