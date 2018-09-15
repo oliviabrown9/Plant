@@ -29,15 +29,37 @@ class SettingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
-        let averageLabel = UILabel()
-        averageLabel.text = "\(appDelegate.servingsManager.getMaxServings(for: "leafyVegetables"))"
-        averageLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
-        averageLabel.textColor = .white
-        view.addSubview(averageLabel)
+        let servingLabel = UILabel()
+        servingLabel.text = "\(appDelegate.servingsManager.getMaxServings(for: "leafyVegetables"))"
+        servingLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
+        servingLabel.textColor = .white
+        view.addSubview(servingLabel)
 
-        averageLabel.snp.makeConstraints { make in
+        servingLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(titleLabel.snp.bottom).offset(40)
+            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+        }
+
+        let plusButton = UIButton()
+        plusButton.setTitle("+", for: .normal)
+        plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 45, weight: .bold)
+        plusButton.titleLabel?.textColor = .white
+        view.addSubview(plusButton)
+
+        plusButton.snp.makeConstraints { make in
+            make.leading.equalTo(servingLabel.snp.trailing).offset(20)
+            make.centerY.equalTo(servingLabel)
+        }
+
+        let minusButton = UIButton()
+        minusButton.setTitle("-", for: .normal)
+        minusButton.titleLabel?.font = UIFont.systemFont(ofSize: 45, weight: .bold)
+        minusButton.titleLabel?.textColor = .white
+        view.addSubview(minusButton)
+
+        minusButton.snp.makeConstraints { make in
+            make.trailing.equalTo(servingLabel.snp.leading).offset(-20)
+            make.centerY.equalTo(servingLabel)
         }
 
         let captionLabel = UILabel()
@@ -48,7 +70,7 @@ class SettingsViewController: UIViewController {
 
         captionLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(averageLabel.snp.bottom)
+            make.top.equalTo(servingLabel.snp.bottom)
         }
 
         let dividerView = UIView()
@@ -59,7 +81,7 @@ class SettingsViewController: UIViewController {
             make.height.equalTo(5)
             make.width.equalTo(345)
             make.centerX.equalToSuperview()
-            make.top.equalTo(captionLabel.snp.bottom).offset(30)
+            make.top.equalTo(captionLabel.snp.bottom).offset(40)
         }
 
         let aboutTitleLabel = UILabel()
