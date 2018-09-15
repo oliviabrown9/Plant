@@ -53,22 +53,18 @@ class ServingsManager {
         if addedServing > getMaxServings(for: servingType) {
             addedServing = 0
         }
-
         serving.setValue(addedServing, forKey: servingType)
 
+        save()
+    }
+
+    private func save() {
         do {
             appDelegate = UIApplication.shared.delegate as? AppDelegate
             managedContext = appDelegate?.persistentContainer.viewContext
             try managedContext?.save()
         } catch let error as NSError {
             print("Failed to save with error: \(error), \(error.userInfo)")
-        }
-    }
-
-    private func catchUpToCurrentDate() {
-        guard let previous = servingsHistory.last, Calendar.current.isDate(previous.date!, inSameDayAs:Date()) else {
-            addNewDailyServing()
-            return
         }
     }
 
@@ -95,8 +91,9 @@ class ServingsManager {
 
     func fetchToday() -> DailyServing? {
         loadHistory()
-        if servingsHistory.last == nil {
-            catchUpToCurrentDate()
+        let prevServings = servingsHistory.last?.date
+        if prevServings == nil || !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
+            addNewDailyServing()
         }
         return servingsHistory.last
     }
@@ -109,6 +106,7 @@ class ServingsManager {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         do {
             try servingsHistory = managedContext.fetch(request)
+            print(servingsHistory)
         } catch {
             print("Could not load data")
         }
@@ -118,15 +116,16 @@ class ServingsManager {
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         let serving = DailyServing(context: managedContext)
-        serving.setValue(0, forKey: "leafyVegetables")
-        serving.setValue(0, forKey: "otherVegetables")
-        serving.setValue(0, forKey: "berries")
-        serving.setValue(0, forKey: "otherFruit")
-        serving.setValue(0, forKey: "wholeGrains")
-        serving.setValue(0, forKey: "legumes")
-        serving.setValue(0, forKey: "nutsAndSeeds")
+        serving.setValue(2, forKey: "leafyVegetables")
+        serving.setValue(2, forKey: "otherVegetables")
+        serving.setValue(2, forKey: "berries")
+        serving.setValue(2, forKey: "otherFruit")
+        serving.setValue(2, forKey: "wholeGrains")
+        serving.setValue(2, forKey: "legumes")
+        serving.setValue(2, forKey: "nutsAndSeeds")
         serving.setValue(Date(), forKey: "date")
         servingsHistory.append(serving)
+        save()
     }
 
     func fetchWeeklyAverage() -> AverageServing {
