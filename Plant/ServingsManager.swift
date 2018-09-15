@@ -51,9 +51,7 @@ class ServingsManager {
 
     func addServing(to currentServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
-        print(serving.leafyVegetables)
         var addedServing = currentServings + 1
-        print(addedServing)
         if addedServing > getMaxServings(for: servingType) {
             addedServing = 0
         }
@@ -132,6 +130,7 @@ class ServingsManager {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         let serving = DailyServing(context: managedContext)
         allServingTypes.forEach { serving.setValue(0, forKey: $0.key) }
+        serving.setValue(Date(), forKey: "date")
         servingsHistory.append(serving)
         save()
     }

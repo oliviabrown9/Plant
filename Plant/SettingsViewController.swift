@@ -31,7 +31,6 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
         currServingType = appDelegate.servingsManager.allServingTypes[currTypeIndex]
-        print(currServingType.key)
 
         titleLabel.text = "Settings"
         titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)

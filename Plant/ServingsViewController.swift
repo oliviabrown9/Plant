@@ -119,7 +119,6 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
         let manager = appDelegate.servingsManager
         let servingType = manager.allServingTypes[indexPath.row]
         manager.addServing(to: manager.getCurrServings(for: servingType.key), for: servingType.key)
-        print(manager.getCurrServings(for: servingType.key))
         tableView.reloadData()
     }
 }
