@@ -22,6 +22,8 @@ class ServingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
+
+        //TODO: Change to custom tab bar
         setUpBottomButtons()
 
         // MARK: Table View
@@ -66,6 +68,7 @@ class ServingsViewController: UIViewController {
         // MARK: Settings Button
         settingsButton.setImage(#imageLiteral(resourceName: "settingsNotInUse"), for: .normal)
         view.addSubview(settingsButton)
+        settingsButton.addTarget(self, action: #selector(displaySettings), for: .touchUpInside)
 
         settingsButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
@@ -75,8 +78,17 @@ class ServingsViewController: UIViewController {
     }
 
     @objc func displayAverage() {
-        present(AverageViewController(), animated: true, completion: nil)
-//        self.navigationController?.pushViewController(AverageViewController(), animated: true)
+        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
+        navigationController?.pushViewController(AverageViewController(), animated: false)
+    }
+
+    @objc func displaySettings() {
+        navigationController?.view.layer.add(CustomTransitions().transitionToRight, forKey: kCATransition)
+        navigationController?.pushViewController(SettingsViewController(), animated: true)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.isNavigationBarHidden = true
     }
 }
 

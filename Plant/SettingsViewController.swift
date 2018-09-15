@@ -1,5 +1,5 @@
 //
-//  AverageViewController.swift
+//  SettingsViewController.swift
 //  Plant
 //
 //  Created by Olivia Brown on 9/15/18.
@@ -8,8 +8,7 @@
 
 import UIKit
 
-class AverageViewController: UIViewController {
-
+class SettingsViewController: UIViewController {
     private let leafButton = UIButton()
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
@@ -18,7 +17,7 @@ class AverageViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
         setUpBottomButtons()
-
+        
     }
 
     private func setUpBottomButtons() {
@@ -42,26 +41,27 @@ class AverageViewController: UIViewController {
             make.leading.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
             make.bottom.equalToSuperview().inset(UIConstants.layout.sideButtonBottomInset)
         }
+        calendarButton.addTarget(self, action: #selector(displayAverage), for: .touchUpInside)
 
         // MARK: Settings Button
         settingsButton.setImage(#imageLiteral(resourceName: "settingsNotInUse"), for: .normal)
         view.addSubview(settingsButton)
-        settingsButton.addTarget(self, action: #selector(displaySettings), for: .touchUpInside)
 
         settingsButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
             make.centerY.equalTo(calendarButton)
+
         }
     }
 
     @objc func displayServings() {
-        navigationController?.view.layer.add(CustomTransitions().transitionToRight, forKey: kCATransition)
+        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
         navigationController?.popToRootViewController(animated: false)
     }
 
-    @objc func displaySettings() {
-        navigationController?.view.layer.add(CustomTransitions().transitionToRight, forKey: kCATransition)
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+    @objc func displayAverage() {
+        navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
+        navigationController?.pushViewController(AverageViewController(), animated: true)
     }
 
 }
