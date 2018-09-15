@@ -21,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window?.backgroundColor = UIConstants.colors.defaultGreen
         self.window?.rootViewController = UINavigationController(rootViewController: servingsViewController)
         self.window?.makeKeyAndVisible()
+
+        // Set original default values for max servings
+        let servingsDefaults = [ServingsManager.ServingsKey.leafyVegetables: 2,
+                           ServingsManager.ServingsKey.otherVegetables: 2,
+                           ServingsManager.ServingsKey.berries: 1,
+                           ServingsManager.ServingsKey.otherFruit: 3,
+                           ServingsManager.ServingsKey.wholeGrains: 5,
+                           ServingsManager.ServingsKey.legumes: 2,
+                           ServingsManager.ServingsKey.nutsAndSeeds: 1]
+        UserDefaults.standard.register(defaults: servingsDefaults)
         return true
     }
 

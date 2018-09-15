@@ -145,19 +145,19 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let currentServings = currentServings else { return }
         switch indexPath.row {
         case 0:
-            appDelegate.servingsManager.addServing(to: currentServings.leafyVegetables, for: "leafyVegetables")
+            appDelegate.servingsManager.addServing(to: currentServings.leafyVegetables, for: ServingsManager.ServingsKey.leafyVegetables)
         case 1:
-            appDelegate.servingsManager.addServing(to: currentServings.otherVegetables, for: "otherVegetables")
+            appDelegate.servingsManager.addServing(to: currentServings.otherVegetables, for: ServingsManager.ServingsKey.otherVegetables)
         case 2:
-            appDelegate.servingsManager.addServing(to: currentServings.berries, for: "berries")
+            appDelegate.servingsManager.addServing(to: currentServings.berries, for: ServingsManager.ServingsKey.berries)
         case 3:
-            appDelegate.servingsManager.addServing(to: currentServings.otherFruit, for: "otherFruit")
+            appDelegate.servingsManager.addServing(to: currentServings.otherFruit, for: ServingsManager.ServingsKey.otherFruit)
         case 4:
-            appDelegate.servingsManager.addServing(to: currentServings.wholeGrains, for: "wholeGrains")
+            appDelegate.servingsManager.addServing(to: currentServings.wholeGrains, for: ServingsManager.ServingsKey.wholeGrains)
         case 5:
-            appDelegate.servingsManager.addServing(to: currentServings.legumes, for: "legumes")
+            appDelegate.servingsManager.addServing(to: currentServings.legumes, for: ServingsManager.ServingsKey.legumes)
         case 6:
-            appDelegate.servingsManager.addServing(to: currentServings.nutsAndSeeds, for: "nutsAndSeeds")
+            appDelegate.servingsManager.addServing(to: currentServings.nutsAndSeeds, for: ServingsManager.ServingsKey.nutsAndSeeds)
         default:
             fatalError() // Unknown cell
         }

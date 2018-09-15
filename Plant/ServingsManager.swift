@@ -11,14 +11,22 @@ import UIKit
 import CoreData
 
 class ServingsManager {
-    struct defaultMaxServings {
-        static let leafyVegetables = 2
-        static let otherVegetables = 2
-        static let berries = 1
-        static let otherFruit = 3
-        static let wholeGrains = 5
-        static let legumes = 2
-        static let nutsAndSeeds = 1
+    struct ServingsKey {
+        static let leafyVegetables = "leafyVegetables"
+        static let otherVegetables = "otherVegetables"
+        static let berries = "berries"
+        static let otherFruit = "otherFruit"
+        static let wholeGrains = "wholeGrains"
+        static let legumes = "legumes"
+        static let nutsAndSeeds = "nutsAndSeeds"
+
+        static let allPossibleTypes = [leafyVegetables,
+                                       otherVegetables,
+                                       berries,
+                                       otherFruit,
+                                       wholeGrains,
+                                       legumes,
+                                       nutsAndSeeds]
     }
 
     struct AverageServing {
@@ -42,12 +50,12 @@ class ServingsManager {
             self.nutsAndSeeds = nutsAndSeeds
             self.totalCompleted = totalCompleted
         }
-
     }
 
-    var servingsHistory = [DailyServing]()
+    private var servingsHistory = [DailyServing]()
     private var managedContext: NSManagedObjectContext? = nil
     private var appDelegate: AppDelegate? = nil
+
 
     func addServing(to currentServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
@@ -70,24 +78,7 @@ class ServingsManager {
     }
 
     func getMaxServings(for servingType: String) -> Int {
-        switch servingType {
-        case "leafyVegetables":
-            return defaultMaxServings.leafyVegetables
-        case "otherVegetables":
-            return defaultMaxServings.otherVegetables
-        case "berries":
-            return defaultMaxServings.berries
-        case "otherFruit":
-            return defaultMaxServings.otherFruit
-        case "wholeGrains":
-            return defaultMaxServings.wholeGrains
-        case "legumes":
-            return defaultMaxServings.legumes
-        case "nutsAndSeeds":
-            return defaultMaxServings.nutsAndSeeds
-        default:
-            return 0
-        }
+        return UserDefaults.standard.integer(forKey: servingType)
     }
 
     func fetchToday() -> DailyServing? {
@@ -137,10 +128,8 @@ class ServingsManager {
         let legumes = getAverage(for: "legumes")
         let nutsAndSeeds = getAverage(for: "nutsAndSeeds")
         let totalCompleted = leafyVegetables + otherVegetables + berries + otherFruit + wholeGrains + legumes + nutsAndSeeds
-
-        let allPossibleTypes = ["leafyVegetables", "otherVegetables", "berries", "otherFruit", "wholeGrains", "legumes", "nutsAndSeeds"]
         var totalPossible = 0.0
-        allPossibleTypes.forEach { totalPossible += Double(getMaxServings(for: $0)) }
+        ServingsManager.ServingsKey.allPossibleTypes.forEach { totalPossible += Double(getMaxServings(for: $0)) }
 
         return AverageServing(leafyVegetables: leafyVegetables,
                               otherVegetables: otherVegetables,
