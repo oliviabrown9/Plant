@@ -14,7 +14,7 @@ class ServingsTableViewCell: UITableViewCell {
     var tracker: UIStackView?
     var identifier: String!
 
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, numSections: Int, numFilled: Int16) {
+    init(style: UITableViewCell.CellStyle, reuseIdentifier: String?, numSections: Int, numFilled: Int16) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         // MARK: Title Label
