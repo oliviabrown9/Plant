@@ -124,7 +124,7 @@ class AverageViewController: UIViewController {
 
     @objc func displaySettings() {
         navigationController?.view.layer.add(CustomTransitions().transitionToRight, forKey: kCATransition)
-        navigationController?.pushViewController(SettingsViewController(), animated: true)
+        navigationController?.pushViewController(SettingsViewController(), animated: false)
     }
 
 }

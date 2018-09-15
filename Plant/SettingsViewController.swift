@@ -170,7 +170,7 @@ class SettingsViewController: UIViewController {
 
     @objc func displayAverage() {
         navigationController?.view.layer.add(CustomTransitions().transitionToLeft, forKey: kCATransition)
-        navigationController?.pushViewController(AverageViewController(), animated: true)
+        navigationController?.pushViewController(AverageViewController(), animated: false)
     }
 
 }
