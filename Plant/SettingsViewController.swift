@@ -150,23 +150,24 @@ class SettingsViewController: UIViewController {
             make.centerY.equalTo(servingLabel)
         }
 
-
-        forwardArrow.setTitle("GOO", for: .normal)
+        forwardArrow.setImage(#imageLiteral(resourceName:"forwardButton"), for: .normal)
         forwardArrow.addTarget(self, action: #selector(goForward), for: .touchUpInside)
         view.addSubview(forwardArrow)
 
         forwardArrow.snp.makeConstraints { make in
             make.centerY.equalTo(servingLabel)
-            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(-15)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(15)
+            make.height.width.equalTo(28)
         }
 
-        backArrow.setTitle("GO", for: .normal)
+        backArrow.setImage(#imageLiteral(resourceName: "backButton"), for: .normal)
         backArrow.addTarget(self, action: #selector(goBack), for: .touchUpInside)
         view.addSubview(backArrow)
 
         backArrow.snp.makeConstraints { make in
             make.centerY.equalTo(servingLabel)
             make.leading.equalTo(view.safeAreaLayoutGuide).inset(15)
+            make.height.width.equalTo(forwardArrow)
         }
         updateArrowsEnabled()
 
