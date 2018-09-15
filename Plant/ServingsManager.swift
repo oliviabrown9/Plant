@@ -51,7 +51,9 @@ class ServingsManager {
 
     func addServing(to currentServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
+        print(serving.leafyVegetables)
         var addedServing = currentServings + 1
+        print(addedServing)
         if addedServing > getMaxServings(for: servingType) {
             addedServing = 0
         }
@@ -106,7 +108,7 @@ class ServingsManager {
     private func fetchToday() -> DailyServing? {
         loadHistory()
         let prevServings = servingsHistory.first?.date
-        if prevServings == nil, !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
+        if prevServings == nil || !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
             addNewDailyServing()
         }
         return servingsHistory.last
@@ -160,7 +162,8 @@ class ServingsManager {
 
         for day in lastWeekDates {
             for serving in lastSevenDailyServings {
-                if Calendar.current.isDate(day, inSameDayAs:serving.date!) {
+                guard let servingDate = serving.date else { return 0.0 }
+                if Calendar.current.isDate(day, inSameDayAs: servingDate) {
                     switch type {
                     case types.leafyVegetables().key: averageServing += Double(serving.leafyVegetables)
                     case types.otherVegetables().key: averageServing += Double(serving.otherVegetables)

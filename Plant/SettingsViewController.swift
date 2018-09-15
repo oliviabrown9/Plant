@@ -11,6 +11,7 @@ import UIKit
 class SettingsViewController: UIViewController {
 
     private let titleLabel = UILabel()
+    private let servingLabel = UILabel()
     private let captionLabel = UILabel()
     private let leafButton = UIButton()
     private let calendarButton = UIButton()
@@ -19,11 +20,18 @@ class SettingsViewController: UIViewController {
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
     private var currTypeIndex = 0
     private var currServingType: ServingType!
+    private var currServingMaxValue: Int! {
+        didSet {
+            UserDefaults.standard.set(currServingMaxValue, forKey: currServingType.key)
+            servingLabel.text = "\(currServingMaxValue!)"
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
         currServingType = appDelegate.servingsManager.allServingTypes[currTypeIndex]
+        print(currServingType.key)
 
         titleLabel.text = "Settings"
         titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
@@ -62,16 +70,17 @@ class SettingsViewController: UIViewController {
     }
 
     @objc func plusTapped() {
-
+        currServingMaxValue += 1
     }
 
     @objc func minusTapped() {
-
+        if currServingMaxValue > 1 {
+            currServingMaxValue -= 1
+        }
     }
 
     private func setUpServingsUI() {
-        let servingLabel = UILabel()
-        servingLabel.text = "\(appDelegate.servingsManager.getMaxServings(for: "leafyVegetables"))"
+        currServingMaxValue = appDelegate.servingsManager.getMaxServings(for: currServingType.key)
         servingLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
         servingLabel.textColor = .white
         view.addSubview(servingLabel)
@@ -85,6 +94,7 @@ class SettingsViewController: UIViewController {
         plusButton.setTitle("+", for: .normal)
         plusButton.titleLabel?.font = UIFont.systemFont(ofSize: 45, weight: .bold)
         plusButton.titleLabel?.textColor = .white
+        plusButton.addTarget(self, action: #selector(plusTapped), for: .touchUpInside)
         view.addSubview(plusButton)
 
         plusButton.snp.makeConstraints { make in
@@ -96,6 +106,7 @@ class SettingsViewController: UIViewController {
         minusButton.setTitle("-", for: .normal)
         minusButton.titleLabel?.font = UIFont.systemFont(ofSize: 45, weight: .bold)
         minusButton.titleLabel?.textColor = .white
+        minusButton.addTarget(self, action: #selector(minusTapped), for: .touchUpInside)
         view.addSubview(minusButton)
 
         minusButton.snp.makeConstraints { make in
@@ -188,7 +199,6 @@ class SettingsViewController: UIViewController {
         settingsButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
             make.centerY.equalTo(calendarButton)
-
         }
     }
 }
