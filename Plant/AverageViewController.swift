@@ -24,7 +24,6 @@ class AverageViewController: UIViewController {
         setUpBottomButtons()
 
         averageServings = appDelegate.servingsManager.fetchWeeklyAverage()
-        print(averageServings)
 
         let titleLabel = UILabel()
         titleLabel.text = "Weekly Average"

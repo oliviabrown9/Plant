@@ -54,7 +54,6 @@ class ServingsManager {
             addedServing = 0
         }
         serving.setValue(addedServing, forKey: servingType)
-
         save()
     }
 
@@ -91,8 +90,8 @@ class ServingsManager {
 
     func fetchToday() -> DailyServing? {
         loadHistory()
-        let prevServings = servingsHistory.last?.date
-        if prevServings == nil || !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
+        let prevServings = servingsHistory.first?.date
+        if prevServings == nil, !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
             addNewDailyServing()
         }
         return servingsHistory.last
@@ -106,7 +105,6 @@ class ServingsManager {
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         do {
             try servingsHistory = managedContext.fetch(request)
-            print(servingsHistory)
         } catch {
             print("Could not load data")
         }
@@ -139,18 +137,35 @@ class ServingsManager {
     }
 
     private func getAverage(for type: String) -> Double {
-        let lastSevenDailyServings = servingsHistory.suffix(7)
+        let lastSevenDailyServings = servingsHistory.suffix(8)
         let lastWeekDates = getLastWeekDates()
         var averageServing = 0.0
 
         for day in lastWeekDates {
             for serving in lastSevenDailyServings {
                 if Calendar.current.isDate(day, inSameDayAs:serving.date!) {
-                    averageServing += Double(serving.berries)
+                    switch type {
+                    case "leafyVegetables":
+                        averageServing += Double(serving.leafyVegetables)
+                    case "otherVegetables":
+                        averageServing += Double(serving.otherVegetables)
+                    case "berries":
+                        averageServing += Double(serving.berries)
+                    case "otherFruit":
+                        averageServing += Double(serving.otherFruit)
+                    case "wholeGrains":
+                        averageServing += Double(serving.wholeGrains)
+                    case "legumes":
+                        averageServing += Double(serving.legumes)
+                    case "nutsAndSeeds":
+                        averageServing += Double(serving.nutsAndSeeds)
+                    default:
+                        break
+                    }
                 }
             }
         }
-        return averageServing
+        return averageServing / Double(7)
     }
 
     private func getLastWeekDates() -> [Date] {
