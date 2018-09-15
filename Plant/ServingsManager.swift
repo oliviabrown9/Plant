@@ -13,8 +13,8 @@ import CoreData
 class ServingsManager {
 
     var servingsHistory = [DailyServing]()
-    var managedContext: NSManagedObjectContext!
-    let appDelegate: AppDelegate!
+    private var managedContext: NSManagedObjectContext!
+    private let appDelegate: AppDelegate!
 
     init() {
         appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -34,15 +34,33 @@ class ServingsManager {
         }
     }
 
-    func catchUpToCurrentDate() {
+    private func catchUpToCurrentDate() {
         let previous = servingsHistory.last?.value(forKey: "date") as? Date
-        guard let prevDay = previous, Calendar.current.isDate(prevDay, inSameDayAs:Date()) else {
+        guard let prevDay = previous else {
             addNewDailyServing()
             return
         }
+        if !Calendar.current.isDate(prevDay, inSameDayAs:Date()) {
+            addNewDailyServing()
+        }
     }
 
-    func addNewDailyServing() {
+    func fetchToday() -> DailyServing? {
+        catchUpToCurrentDate()
+        let request: NSFetchRequest<DailyServing> = DailyServing.fetchRequest()
+        let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        request.sortDescriptors = [sortDescriptor]
+
+        do {
+            try servingsHistory = managedContext.fetch(request)
+            return servingsHistory.last
+        } catch {
+            print("Could not load data")
+            return nil
+        }
+    }
+
+    private func addNewDailyServing() {
         let serving = DailyServing(context: managedContext)
         serving.setValue(0, forKey: "leafyVegetables")
         serving.setValue(0, forKey: "otherVegetables")

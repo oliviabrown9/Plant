@@ -37,7 +37,8 @@ class ServingsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
 
-        appDelegate.servingsManager.catchUpToCurrentDate()
+        guard let currentServings = appDelegate.servingsManager.fetchToday() else { fatalError() }
+        print(currentServings.date)
     }
 
     private func setUpBottomButtons() {
@@ -111,7 +112,7 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        appDelegate?.servingsManager.save(numServings: 1, for: "leafyVegetables")
+        appDelegate.servingsManager.save(numServings: 1, for: "leafyVegetables")
     }
 }
 
