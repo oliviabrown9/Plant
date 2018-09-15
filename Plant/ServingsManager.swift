@@ -23,7 +23,6 @@ class ServingsManager {
     }
 
     func save(numServings: Int, for servingType: String) {
-
         guard let serving = servingsHistory.last else { return }
         serving.setValue(numServings, forKey: servingType)
 

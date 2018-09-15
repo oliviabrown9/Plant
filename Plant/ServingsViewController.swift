@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ServingsViewController.swift
 //  Plant
 //
 //  Created by Olivia Brown on 8/19/18.
@@ -16,6 +16,7 @@ class ServingsViewController: UIViewController {
     private let leafButton = UIButton()
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
+    private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,8 @@ class ServingsViewController: UIViewController {
         }
         tableView.dataSource = self
         tableView.delegate = self
+
+        appDelegate.servingsManager.catchUpToCurrentDate()
     }
 
     private func setUpBottomButtons() {
@@ -108,7 +111,6 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
         appDelegate?.servingsManager.save(numServings: 1, for: "leafyVegetables")
     }
 }
