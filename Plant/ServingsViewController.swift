@@ -80,58 +80,61 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let currentServings = currentServings else { fatalError() }
         var cell: ServingsTableViewCell? = nil
         switch indexPath.row {
         case 0:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: currentServings.leafyVegetables)
             cell?.titleLabel.text = "leafy vegetables"
         case 1:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: currentServings.otherVegetables)
             cell?.titleLabel.text = "other vegetables"
         case 2:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: currentServings.berries)
             cell?.titleLabel.text = "berries"
         case 3:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3, numFilled: currentServings.otherFruit)
             cell?.titleLabel.text = "other fruit"
         case 4:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5, numFilled: currentServings.wholeGrains)
             cell?.titleLabel.text = "whole grains"
         case 5:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: currentServings.legumes)
             cell?.titleLabel.text = "legumes"
         case 6:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: currentServings.nutsAndSeeds)
             cell?.titleLabel.text = "nuts & seeds"
         default:
             break
         }
 
         cell?.selectionStyle = .none
-        return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1)
+        return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: 0)
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let currentServings = currentServings else { return }
         switch indexPath.row {
         case 0:
-            appDelegate.servingsManager.save(numServings: currentServings.leafyVegetables + Int16(1), for: "leafyVegetables")
+            appDelegate.servingsManager.addServing(to: currentServings.leafyVegetables, for: "leafyVegetables")
+//            appDelegate.servingsManager.save(numServings: currentServings.leafyVegetables, for: "leafyVegetables")
         case 1:
-            appDelegate.servingsManager.save(numServings: currentServings.otherVegetables + Int16(1), for: "otherVegetables")
+            appDelegate.servingsManager.addServing(to: currentServings.otherVegetables, for: "otherVegetables")
         case 2:
-            appDelegate.servingsManager.save(numServings: currentServings.berries + Int16(1), for: "berries")
+            appDelegate.servingsManager.addServing(to: currentServings.berries, for: "berries")
         case 3:
-            appDelegate.servingsManager.save(numServings: currentServings.otherFruit + Int16(1), for: "otherFruit")
+            appDelegate.servingsManager.addServing(to: currentServings.otherFruit, for: "otherFruit")
         case 4:
-            appDelegate.servingsManager.save(numServings: currentServings.wholeGrains + Int16(1), for: "wholeGrains")
+            appDelegate.servingsManager.addServing(to: currentServings.wholeGrains, for: "wholeGrains")
         case 5:
-            appDelegate.servingsManager.save(numServings: currentServings.legumes + Int16(1), for: "legumes")
+            appDelegate.servingsManager.addServing(to: currentServings.legumes, for: "legumes")
         case 6:
-            appDelegate.servingsManager.save(numServings: currentServings.nutsAndSeeds + Int16(1), for: "nutsAndSeeds")
+            appDelegate.servingsManager.addServing(to: currentServings.nutsAndSeeds, for: "nutsAndSeeds")
         default:
             // Unknown cell
             fatalError()
         }
+        tableView.reloadData()
         print(appDelegate.servingsManager.servingsHistory)
     }
 }

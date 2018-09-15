@@ -9,11 +9,12 @@
 import UIKit
 
 class ServingsTableViewCell: UITableViewCell {
+
     let titleLabel = UILabel()
     var tracker: UIStackView?
     var identifier: String!
 
-    init(style: UITableViewCellStyle, reuseIdentifier: String?, numSections: Int) {
+    init(style: UITableViewCellStyle, reuseIdentifier: String?, numSections: Int, numFilled: Int16) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         // MARK: Title Label
@@ -26,11 +27,19 @@ class ServingsTableViewCell: UITableViewCell {
             make.top.equalToSuperview()
         }
 
+        var numToFill = Int(numFilled) % numSections
+        if numFilled > 0 && numToFill == 0 { numToFill = numSections }
+
         var trackerSubviews = [UIView]()
         let trackerSubviewWidth = calculateTrackerSectionWidth(for: numSections)
         for _ in 0..<numSections {
             let trackerSubview = UIView()
-            trackerSubview.backgroundColor = UIConstants.colors.disabledGreen
+            if numToFill > 0 {
+                trackerSubview.backgroundColor = .red
+                numToFill -= 1
+            } else {
+                trackerSubview.backgroundColor = UIConstants.colors.disabledGreen
+            }
             trackerSubview.layer.cornerRadius = 5
             trackerSubview.snp.makeConstraints { make in
                 make.height.equalTo(26)
@@ -40,7 +49,6 @@ class ServingsTableViewCell: UITableViewCell {
         }
         tracker = UIStackView(arrangedSubviews: trackerSubviews)
         guard let tracker = tracker else { fatalError() }
-
 
         tracker.distribution = .fill
         tracker.spacing = 10.0

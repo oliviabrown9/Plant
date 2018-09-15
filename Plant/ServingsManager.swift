@@ -11,14 +11,28 @@ import UIKit
 import CoreData
 
 class ServingsManager {
+    struct defaultMaxServings {
+        static let leafyVegetables = 2
+        static let otherVegetables = 2
+        static let berries = 1
+        static let otherFruit = 3
+        static let wholeGrains = 5
+        static let legumes = 2
+        static let nutsAndSeeds = 1
+    }
 
     var servingsHistory = [DailyServing]()
     private var managedContext: NSManagedObjectContext? = nil
     private var appDelegate: AppDelegate? = nil
 
-    func save(numServings: Int16, for servingType: String) {
+    func addServing(to currentServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
-        serving.setValue(numServings, forKey: servingType)
+        var addedServing = currentServings + 1
+        if addedServing > getMaxServings(for: servingType) {
+            addedServing = 0
+        }
+
+        serving.setValue(addedServing, forKey: servingType)
 
         do {
             appDelegate = UIApplication.shared.delegate as? AppDelegate
@@ -30,29 +44,52 @@ class ServingsManager {
     }
 
     private func catchUpToCurrentDate() {
-        guard let previous = servingsHistory.last else {
+        guard let previous = servingsHistory.last, Calendar.current.isDate(previous.date!, inSameDayAs:Date()) else {
             addNewDailyServing()
             return
         }
-        if !Calendar.current.isDate(previous.date!, inSameDayAs:Date()) {
-            addNewDailyServing()
+    }
+
+    private func getMaxServings(for servingType: String) -> Int {
+        switch servingType {
+        case "leafyVegetables":
+            return defaultMaxServings.leafyVegetables
+        case "otherVegetables":
+            return defaultMaxServings.otherVegetables
+        case "berries":
+            return defaultMaxServings.berries
+        case "otherFruit":
+            return defaultMaxServings.otherFruit
+        case "wholeGrains":
+            return defaultMaxServings.wholeGrains
+        case "legumes":
+            return defaultMaxServings.legumes
+        case "nutsAndSeeds":
+            return defaultMaxServings.nutsAndSeeds
+        default:
+            return 0
         }
+
     }
 
     func fetchToday() -> DailyServing? {
-        catchUpToCurrentDate()
+        loadHistory()
+        if servingsHistory.last == nil {
+            catchUpToCurrentDate()
+        }
+        return servingsHistory.last
+    }
+
+    private func loadHistory() {
         let request: NSFetchRequest<DailyServing> = DailyServing.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sortDescriptor]
-
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         do {
-            appDelegate = UIApplication.shared.delegate as? AppDelegate
-            guard let managedContext = appDelegate?.persistentContainer.viewContext else { return nil }
             try servingsHistory = managedContext.fetch(request)
-            return servingsHistory.last
         } catch {
             print("Could not load data")
-            return nil
         }
     }
 
