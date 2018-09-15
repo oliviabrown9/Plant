@@ -17,9 +17,20 @@ class SettingsViewController: UIViewController {
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
     private let dividerView = UIView()
+    private let forwardArrow = UIButton()
+    private let backArrow = UIButton()
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
-    private var currTypeIndex = 0
-    private var currServingType: ServingType!
+    private var currTypeIndex = 0 {
+        didSet {
+            currServingType = appDelegate.servingsManager.allServingTypes[currTypeIndex]
+        }
+    }
+    private var currServingType: ServingType! {
+        didSet {
+            currServingMaxValue = appDelegate.servingsManager.getMaxServings(for: currServingType.key)
+            captionLabel.text = currServingType.title
+        }
+    }
     private var currServingMaxValue: Int! {
         didSet {
             UserDefaults.standard.set(currServingMaxValue, forKey: currServingType.key)
@@ -78,8 +89,34 @@ class SettingsViewController: UIViewController {
         }
     }
 
+    @objc func goForward() {
+        if currTypeIndex < 6 {
+            currTypeIndex += 1
+        }
+        updateArrowsEnabled()
+    }
+
+    @objc func goBack() {
+        if currTypeIndex > 0 {
+            currTypeIndex -= 1
+        }
+        updateArrowsEnabled()
+    }
+
+    private func updateArrowsEnabled() {
+        if currTypeIndex > 0 {
+            backArrow.isHidden = false
+        } else {
+            backArrow.isHidden = true
+        }
+        if currTypeIndex < 6 {
+            forwardArrow.isHidden = false
+        } else {
+            forwardArrow.isHidden = true
+        }
+    }
+
     private func setUpServingsUI() {
-        currServingMaxValue = appDelegate.servingsManager.getMaxServings(for: currServingType.key)
         servingLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
         servingLabel.textColor = .white
         view.addSubview(servingLabel)
@@ -113,7 +150,26 @@ class SettingsViewController: UIViewController {
             make.centerY.equalTo(servingLabel)
         }
 
-        captionLabel.text = "leafy vegetables"
+
+        forwardArrow.setTitle("GOO", for: .normal)
+        forwardArrow.addTarget(self, action: #selector(goForward), for: .touchUpInside)
+        view.addSubview(forwardArrow)
+
+        forwardArrow.snp.makeConstraints { make in
+            make.centerY.equalTo(servingLabel)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).inset(-15)
+        }
+
+        backArrow.setTitle("GO", for: .normal)
+        backArrow.addTarget(self, action: #selector(goBack), for: .touchUpInside)
+        view.addSubview(backArrow)
+
+        backArrow.snp.makeConstraints { make in
+            make.centerY.equalTo(servingLabel)
+            make.leading.equalTo(view.safeAreaLayoutGuide).inset(15)
+        }
+        updateArrowsEnabled()
+
         captionLabel.font = UIFont.systemFont(ofSize: 28, weight: .semibold)
         captionLabel.textColor = .white
         view.addSubview(captionLabel)
