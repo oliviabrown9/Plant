@@ -49,7 +49,6 @@ class ServingsManager {
     private var managedContext: NSManagedObjectContext? = nil
     private var appDelegate: AppDelegate? = nil
 
-
     func addServing(to currentServings: Int16, for servingType: String) {
         guard let serving = servingsHistory.last else { return }
         var addedServing = currentServings + 1
@@ -58,16 +57,6 @@ class ServingsManager {
         }
         serving.setValue(addedServing, forKey: servingType)
         save()
-    }
-
-    private func save() {
-        do {
-            appDelegate = UIApplication.shared.delegate as? AppDelegate
-            managedContext = appDelegate?.persistentContainer.viewContext
-            try managedContext?.save()
-        } catch let error as NSError {
-            print("Failed to save with error: \(error), \(error.userInfo)")
-        }
     }
 
     func getMaxServings(for servingType: String) -> Int {
@@ -104,7 +93,17 @@ class ServingsManager {
         }
     }
 
-    func fetchToday() -> DailyServing? {
+    private func save() {
+        do {
+            appDelegate = UIApplication.shared.delegate as? AppDelegate
+            managedContext = appDelegate?.persistentContainer.viewContext
+            try managedContext?.save()
+        } catch let error as NSError {
+            print("Failed to save with error: \(error), \(error.userInfo)")
+        }
+    }
+
+    private func fetchToday() -> DailyServing? {
         loadHistory()
         let prevServings = servingsHistory.first?.date
         if prevServings == nil, !Calendar.current.isDate(prevServings!, inSameDayAs:Date()) {
@@ -130,37 +129,26 @@ class ServingsManager {
         appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
         let serving = DailyServing(context: managedContext)
-        serving.setValue(2, forKey: "leafyVegetables")
-        serving.setValue(2, forKey: "otherVegetables")
-        serving.setValue(2, forKey: "berries")
-        serving.setValue(2, forKey: "otherFruit")
-        serving.setValue(2, forKey: "wholeGrains")
-        serving.setValue(2, forKey: "legumes")
-        serving.setValue(2, forKey: "nutsAndSeeds")
-        serving.setValue(Date(), forKey: "date")
+        allServingTypes.forEach { serving.setValue(0, forKey: $0.key) }
         servingsHistory.append(serving)
         save()
     }
 
     func fetchWeeklyAverage() -> AverageServing {
-        let leafyVegetables = calculateAverage(for: "leafyVegetables")
-        let otherVegetables = calculateAverage(for: "otherVegetables")
-        let berries = calculateAverage(for: "berries")
-        let otherFruit = calculateAverage(for: "otherFruit")
-        let wholeGrains = calculateAverage(for: "wholeGrains")
-        let legumes = calculateAverage(for: "legumes")
-        let nutsAndSeeds = calculateAverage(for: "nutsAndSeeds")
-        let totalCompleted = leafyVegetables + otherVegetables + berries + otherFruit + wholeGrains + legumes + nutsAndSeeds
+        var averageDict = [String:Double]()
+        allServingTypes.forEach { averageDict[$0.key] = calculateAverage(for: $0.key) }
+        var totalCompleted = 0.0
+        allServingTypes.forEach { totalCompleted += averageDict[$0.key]! }
         var totalPossible = 0.0
         allServingTypes.forEach { totalPossible += Double(getMaxServings(for: $0.key)) }
 
-        return AverageServing(leafyVegetables: leafyVegetables,
-                              otherVegetables: otherVegetables,
-                              berries: berries,
-                              otherFruit: otherFruit,
-                              wholeGrains: wholeGrains,
-                              legumes: legumes,
-                              nutsAndSeeds: nutsAndSeeds,
+        return AverageServing(leafyVegetables: averageDict["leafyVegetables"]!,
+                              otherVegetables: averageDict["otherVegetables"]!,
+                              berries: averageDict["berries"]!,
+                              otherFruit: averageDict["otherFruit"]!,
+                              wholeGrains: averageDict["wholeGrains"]!,
+                              legumes: averageDict["legumes"]!,
+                              nutsAndSeeds: averageDict["nutsAndSeeds"]!,
                               totalCompleted: Int(totalCompleted/totalPossible * 100))
     }
 
