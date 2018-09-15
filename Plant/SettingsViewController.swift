@@ -35,6 +35,8 @@ class SettingsViewController: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
+        setUpServingsUI()
+
         view.addSubview(dividerView)
         dividerView.backgroundColor = UIConstants.colors.disabledGreen
 
