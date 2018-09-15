@@ -17,22 +17,6 @@ class ServingsViewController: UIViewController {
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
     private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
-    private var currServings: DailyServing?
-
-    private func getCurrServings(for key: String) -> Int16 {
-        guard let currServings = currServings else { fatalError() }
-        let types = ServingTypes()
-        switch key {
-        case types.leafyVegetables().key: return currServings.leafyVegetables
-        case types.otherVegetables().key: return currServings.otherVegetables
-        case types.berries().key: return currServings.berries
-        case types.otherFruit().key: return currServings.otherFruit
-        case types.wholeGrains().key: return currServings.wholeGrains
-        case types.legumes().key: return currServings.legumes
-        case types.nutsAndSeeds().key: return currServings.nutsAndSeeds
-        default: fatalError()
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +49,6 @@ class ServingsViewController: UIViewController {
         }
         tableView.dataSource = self
         tableView.delegate = self
-
-        currServings = appDelegate.servingsManager.fetchToday()
     }
 
     private func setUpBottomButtons() {
@@ -124,17 +106,18 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let servingType = appDelegate.servingsManager.allServingTypes[indexPath.row]
         let manager = appDelegate.servingsManager
-        let cell = ServingsTableViewCell(style: .default, reuseIdentifier: "ServingCell", numSections: manager.getMaxServings(for: servingType.key), numFilled: getCurrServings(for: servingType.key))
+        let servingType = manager.allServingTypes[indexPath.row]
+        let cell = ServingsTableViewCell(style: .default, reuseIdentifier: "ServingCell", numSections: manager.getMaxServings(for: servingType.key), numFilled: manager.getCurrServings(for: servingType.key))
         cell.titleLabel.text = servingType.title
         cell.selectionStyle = .none
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let servingType = appDelegate.servingsManager.allServingTypes[indexPath.row]
-        appDelegate.servingsManager.addServing(to: getCurrServings(for: servingType.key), for: servingType.key)
+        let manager = appDelegate.servingsManager
+        let servingType = manager.allServingTypes[indexPath.row]
+        manager.addServing(to: manager.getCurrServings(for: servingType.key), for: servingType.key)
         tableView.reloadData()
     }
 }

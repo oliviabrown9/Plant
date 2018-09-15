@@ -135,35 +135,11 @@ extension AverageViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let averageServings = averageServings else { fatalError() }
-        var cell: ServingsTableViewCell? = nil
-        switch indexPath.row {
-        case 0:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.leafyVegetables))
-            cell?.titleLabel.text = "leafy vegetables"
-        case 1:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.otherVegetables))
-            cell?.titleLabel.text = "other vegetables"
-        case 2:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: Int16(averageServings.berries))
-            cell?.titleLabel.text = "berries"
-        case 3:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3, numFilled: Int16(averageServings.otherFruit))
-            cell?.titleLabel.text = "other fruit"
-        case 4:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5, numFilled: Int16(averageServings.wholeGrains))
-            cell?.titleLabel.text = "whole grains"
-        case 5:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.legumes))
-            cell?.titleLabel.text = "legumes"
-        case 6:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: Int16(averageServings.nutsAndSeeds))
-            cell?.titleLabel.text = "nuts & seeds"
-        default:
-            break
-        }
-
-        cell?.selectionStyle = .none
-        return cell ?? ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: 0)
+        let servingType = appDelegate.servingsManager.allServingTypes[indexPath.row]
+        let manager = appDelegate.servingsManager
+        let cell = ServingsTableViewCell(style: .default, reuseIdentifier: "ServingCell", numSections: manager.getMaxServings(for: servingType.key), numFilled: Int16(manager.getAverageServings(for: servingType.key)))
+        cell.titleLabel.text = servingType.title
+        cell.selectionStyle = .none
+        return cell
     }
 }

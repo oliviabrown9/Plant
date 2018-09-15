@@ -74,6 +74,36 @@ class ServingsManager {
         return UserDefaults.standard.integer(forKey: servingType)
     }
 
+    func getCurrServings(for key: String) -> Int16 {
+        guard let currServings = fetchToday() else { fatalError() }
+        let types = ServingTypes()
+        switch key {
+        case types.leafyVegetables().key: return currServings.leafyVegetables
+        case types.otherVegetables().key: return currServings.otherVegetables
+        case types.berries().key: return currServings.berries
+        case types.otherFruit().key: return currServings.otherFruit
+        case types.wholeGrains().key: return currServings.wholeGrains
+        case types.legumes().key: return currServings.legumes
+        case types.nutsAndSeeds().key: return currServings.nutsAndSeeds
+        default: fatalError()
+        }
+    }
+
+    func getAverageServings(for key: String) -> Double {
+        let averageServings = fetchWeeklyAverage()
+        let types = ServingTypes()
+        switch key {
+        case types.leafyVegetables().key: return averageServings.leafyVegetables
+        case types.otherVegetables().key: return averageServings.otherVegetables
+        case types.berries().key: return averageServings.berries
+        case types.otherFruit().key: return averageServings.otherFruit
+        case types.wholeGrains().key: return averageServings.wholeGrains
+        case types.legumes().key: return averageServings.legumes
+        case types.nutsAndSeeds().key: return averageServings.nutsAndSeeds
+        default: fatalError()
+        }
+    }
+
     func fetchToday() -> DailyServing? {
         loadHistory()
         let prevServings = servingsHistory.first?.date
@@ -113,13 +143,13 @@ class ServingsManager {
     }
 
     func fetchWeeklyAverage() -> AverageServing {
-        let leafyVegetables = getAverage(for: "leafyVegetables")
-        let otherVegetables = getAverage(for: "otherVegetables")
-        let berries = getAverage(for: "berries")
-        let otherFruit = getAverage(for: "otherFruit")
-        let wholeGrains = getAverage(for: "wholeGrains")
-        let legumes = getAverage(for: "legumes")
-        let nutsAndSeeds = getAverage(for: "nutsAndSeeds")
+        let leafyVegetables = calculateAverage(for: "leafyVegetables")
+        let otherVegetables = calculateAverage(for: "otherVegetables")
+        let berries = calculateAverage(for: "berries")
+        let otherFruit = calculateAverage(for: "otherFruit")
+        let wholeGrains = calculateAverage(for: "wholeGrains")
+        let legumes = calculateAverage(for: "legumes")
+        let nutsAndSeeds = calculateAverage(for: "nutsAndSeeds")
         let totalCompleted = leafyVegetables + otherVegetables + berries + otherFruit + wholeGrains + legumes + nutsAndSeeds
         var totalPossible = 0.0
         allServingTypes.forEach { totalPossible += Double(getMaxServings(for: $0.key)) }
@@ -134,7 +164,7 @@ class ServingsManager {
                               totalCompleted: Int(totalCompleted/totalPossible * 100))
     }
 
-    private func getAverage(for type: String) -> Double {
+    private func calculateAverage(for type: String) -> Double {
         let lastSevenDailyServings = servingsHistory.suffix(8)
         let lastWeekDates = getLastWeekDates()
         var averageServing = 0.0
