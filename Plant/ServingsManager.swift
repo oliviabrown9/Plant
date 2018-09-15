@@ -30,12 +30,11 @@ class ServingsManager {
     }
 
     private func catchUpToCurrentDate() {
-        let previous = servingsHistory.last?.value(forKey: "date") as? Date
-        guard let prevDay = previous else {
+        guard let previous = servingsHistory.last else {
             addNewDailyServing()
             return
         }
-        if !Calendar.current.isDate(prevDay, inSameDayAs:Date()) {
+        if !Calendar.current.isDate(previous.date!, inSameDayAs:Date()) {
             addNewDailyServing()
         }
     }
@@ -45,7 +44,6 @@ class ServingsManager {
         let request: NSFetchRequest<DailyServing> = DailyServing.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "date", ascending: false)
         request.sortDescriptors = [sortDescriptor]
-        print(servingsHistory)
 
         do {
             appDelegate = UIApplication.shared.delegate as? AppDelegate

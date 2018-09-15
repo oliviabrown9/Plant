@@ -39,7 +39,6 @@ class ServingsViewController: UIViewController {
         tableView.delegate = self
 
         currentServings = appDelegate.servingsManager.fetchToday()
-        print(currentServings?.date)
     }
 
     private func setUpBottomButtons() {
@@ -133,6 +132,7 @@ extension ServingsViewController: UITableViewDelegate, UITableViewDataSource {
             // Unknown cell
             fatalError()
         }
+        print(appDelegate.servingsManager.servingsHistory)
     }
 }
 
