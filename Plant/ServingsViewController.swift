@@ -56,6 +56,7 @@ class ServingsViewController: UIViewController {
         // MARK: Calendar Button
         calendarButton.setImage(#imageLiteral(resourceName: "calendarNotInUse") , for: .normal)
         view.addSubview(calendarButton)
+        calendarButton.addTarget(self, action: #selector(displayAverage), for: .touchUpInside)
 
         calendarButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(UIConstants.layout.sideButtonEdgeInset)
@@ -71,6 +72,11 @@ class ServingsViewController: UIViewController {
             make.centerY.equalTo(calendarButton)
 
         }
+    }
+
+    @objc func displayAverage() {
+        present(AverageViewController(), animated: true, completion: nil)
+//        self.navigationController?.pushViewController(AverageViewController(), animated: true)
     }
 }
 
