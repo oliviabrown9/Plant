@@ -29,9 +29,10 @@ class ServingsManager {
         var wholeGrains: Double
         var legumes: Double
         var nutsAndSeeds: Double
+        var totalCompleted: Int
 
         init(leafyVegetables: Double, otherVegetables: Double, berries: Double, otherFruit: Double,
-             wholeGrains: Double, legumes: Double, nutsAndSeeds: Double) {
+             wholeGrains: Double, legumes: Double, nutsAndSeeds: Double, totalCompleted: Int) {
             self.leafyVegetables = leafyVegetables
             self.otherVegetables = otherVegetables
             self.berries = berries
@@ -39,6 +40,7 @@ class ServingsManager {
             self.wholeGrains = wholeGrains
             self.legumes = legumes
             self.nutsAndSeeds = nutsAndSeeds
+            self.totalCompleted = totalCompleted
         }
 
     }
@@ -127,13 +129,27 @@ class ServingsManager {
     }
 
     func fetchWeeklyAverage() -> AverageServing {
-        return AverageServing(leafyVegetables: getAverage(for: "leafyVegetables"),
-                              otherVegetables: getAverage(for: "otherVegetables"),
-                              berries: getAverage(for: "berries"),
-                              otherFruit: getAverage(for: "otherFruit"),
-                              wholeGrains: getAverage(for: "wholeGrains"),
-                              legumes: getAverage(for: "legumes"),
-                              nutsAndSeeds: getAverage(for: "nutsAndSeeds"))
+        let leafyVegetables = getAverage(for: "leafyVegetables")
+        let otherVegetables = getAverage(for: "otherVegetables")
+        let berries = getAverage(for: "berries")
+        let otherFruit = getAverage(for: "otherFruit")
+        let wholeGrains = getAverage(for: "wholeGrains")
+        let legumes = getAverage(for: "legumes")
+        let nutsAndSeeds = getAverage(for: "nutsAndSeeds")
+        let totalCompleted = leafyVegetables + otherVegetables + berries + otherFruit + wholeGrains + legumes + nutsAndSeeds
+
+        let allPossibleTypes = ["leafyVegetables", "otherVegetables", "berries", "otherFruit", "wholeGrains", "legumes", "nutsAndSeeds"]
+        var totalPossible = 0.0
+        allPossibleTypes.forEach { totalPossible += Double(getMaxServings(for: $0)) }
+
+        return AverageServing(leafyVegetables: leafyVegetables,
+                              otherVegetables: otherVegetables,
+                              berries: berries,
+                              otherFruit: otherFruit,
+                              wholeGrains: wholeGrains,
+                              legumes: legumes,
+                              nutsAndSeeds: nutsAndSeeds,
+                              totalCompleted: Int(totalCompleted/totalPossible * 100))
     }
 
     private func getAverage(for type: String) -> Double {

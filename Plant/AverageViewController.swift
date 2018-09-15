@@ -37,7 +37,7 @@ class AverageViewController: UIViewController {
         }
 
         let averageLabel = UILabel()
-        averageLabel.text = "76%"
+        averageLabel.text = "\(averageServings.totalCompleted)%"
         averageLabel.font = UIFont.systemFont(ofSize: 70, weight: .black)
         averageLabel.textColor = .white
         view.addSubview(averageLabel)
