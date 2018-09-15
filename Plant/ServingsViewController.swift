@@ -23,6 +23,17 @@ class ServingsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
 
+        let titleLabel = UILabel()
+        titleLabel.text = "Today"
+        titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        titleLabel.textColor = .white
+        view.addSubview(titleLabel)
+
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(15)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+
         //TODO: Change to custom tab bar
         setUpBottomButtons()
 
@@ -34,7 +45,7 @@ class ServingsViewController: UIViewController {
 
         tableView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(UIConstants.layout.tableViewTopInset)
+            make.top.equalTo(titleLabel.snp.bottom).inset(10)
             make.bottom.equalTo(leafButton.snp.top).inset(UIConstants.layout.tableViewBottomInset)
         }
         tableView.dataSource = self

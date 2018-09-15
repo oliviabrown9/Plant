@@ -33,7 +33,7 @@ class AverageViewController: UIViewController {
 
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(view.safeAreaLayoutGuide).offset(15)
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(30)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
         }
 
         let averageLabel = UILabel()
@@ -78,7 +78,7 @@ class AverageViewController: UIViewController {
         tableView.snp.makeConstraints { make in
             make.width.centerX.equalToSuperview()
             make.top.equalTo(dividerView.snp.bottom)
-            make.bottom.equalTo(leafButton.snp.top).inset(UIConstants.layout.tableViewBottomInset)
+            make.bottom.equalTo(leafButton.snp.top).inset(-10)
         }
         tableView.dataSource = self
         tableView.delegate = self
@@ -86,7 +86,7 @@ class AverageViewController: UIViewController {
 
     private func setUpBottomButtons() {
         // MARK: Leaf Button
-        leafButton.setImage(#imageLiteral(resourceName: "leafInUse") , for: .normal)
+        leafButton.setImage(#imageLiteral(resourceName: "leafNotInUse") , for: .normal)
         leafButton.isEnabled = true
         view.addSubview(leafButton)
 
@@ -98,7 +98,7 @@ class AverageViewController: UIViewController {
         leafButton.addTarget(self, action: #selector(displayServings), for: .touchUpInside)
 
         // MARK: Calendar Button
-        calendarButton.setImage(#imageLiteral(resourceName: "calendarNotInUse") , for: .normal)
+        calendarButton.setImage(#imageLiteral(resourceName: "calendarInUse") , for: .normal)
         view.addSubview(calendarButton)
 
         calendarButton.snp.makeConstraints { make in

@@ -16,12 +16,24 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
+
+        let titleLabel = UILabel()
+        titleLabel.text = "Settings"
+        titleLabel.font = UIFont.systemFont(ofSize: 34, weight: .bold)
+        titleLabel.textColor = .white
+        view.addSubview(titleLabel)
+
+        titleLabel.snp.makeConstraints { make in
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(15)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
+        }
+
         setUpBottomButtons()
     }
 
     private func setUpBottomButtons() {
         // MARK: Leaf Button
-        leafButton.setImage(#imageLiteral(resourceName: "leafInUse") , for: .normal)
+        leafButton.setImage(#imageLiteral(resourceName: "leafNotInUse") , for: .normal)
         leafButton.isEnabled = true
         view.addSubview(leafButton)
 
@@ -43,7 +55,7 @@ class SettingsViewController: UIViewController {
         calendarButton.addTarget(self, action: #selector(displayAverage), for: .touchUpInside)
 
         // MARK: Settings Button
-        settingsButton.setImage(#imageLiteral(resourceName: "settingsNotInUse"), for: .normal)
+        settingsButton.setImage(#imageLiteral(resourceName: "settingsInUse"), for: .normal)
         view.addSubview(settingsButton)
 
         settingsButton.snp.makeConstraints { make in

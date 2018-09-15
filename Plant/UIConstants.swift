@@ -13,7 +13,7 @@ class UIConstants {
 
     struct colors {
         static let defaultGreen = UIColor(red:0.30, green:0.87, blue:0.40, alpha:1.0)
-        static let disabledGreen = #colorLiteral(red: 0.2862745098, green: 0.7294117647, blue: 0.3607843137, alpha: 1)
+        static let disabledGreen = #colorLiteral(red: 0.2730505764, green: 0.7246103883, blue: 0.3610329628, alpha: 1)
         static let enabledGreen = UIColor(red:0.21, green:0.48, blue:0.26, alpha:1.0)
     }
 
