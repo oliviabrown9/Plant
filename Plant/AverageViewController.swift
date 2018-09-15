@@ -15,14 +15,16 @@ class AverageViewController: UIViewController {
     private let leafButton = UIButton()
     private let calendarButton = UIButton()
     private let settingsButton = UIButton()
-    private var averageServings: DailyServing?
+    private var averageServings: ServingsManager.AverageServing!
+    private let appDelegate: AppDelegate! = UIApplication.shared.delegate as? AppDelegate
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIConstants.colors.defaultGreen
         setUpBottomButtons()
 
-//        currentServings = appDelegate.servingsManager.fetchToday()
+        averageServings = appDelegate.servingsManager.fetchWeeklyAverage()
+        print(averageServings)
 
         let titleLabel = UILabel()
         titleLabel.text = "Weekly Average"
@@ -127,25 +129,25 @@ extension AverageViewController: UITableViewDelegate, UITableViewDataSource {
         var cell: ServingsTableViewCell? = nil
         switch indexPath.row {
         case 0:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: averageServings.leafyVegetables)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.leafyVegetables))
             cell?.titleLabel.text = "leafy vegetables"
         case 1:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: averageServings.otherVegetables)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.otherVegetables))
             cell?.titleLabel.text = "other vegetables"
         case 2:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: averageServings.berries)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: Int16(averageServings.berries))
             cell?.titleLabel.text = "berries"
         case 3:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3, numFilled: averageServings.otherFruit)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 3, numFilled: Int16(averageServings.otherFruit))
             cell?.titleLabel.text = "other fruit"
         case 4:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5, numFilled: averageServings.wholeGrains)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 5, numFilled: Int16(averageServings.wholeGrains))
             cell?.titleLabel.text = "whole grains"
         case 5:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: averageServings.legumes)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 2, numFilled: Int16(averageServings.legumes))
             cell?.titleLabel.text = "legumes"
         case 6:
-            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: averageServings.nutsAndSeeds)
+            cell = ServingsTableViewCell(style: .default , reuseIdentifier: "ServingCell", numSections: 1, numFilled: Int16(averageServings.nutsAndSeeds))
             cell?.titleLabel.text = "nuts & seeds"
         default:
             break

@@ -21,7 +21,7 @@ class ServingsManager {
         static let nutsAndSeeds = 1
     }
 
-    struct averageServing {
+    struct AverageServing {
         var leafyVegetables: Double
         var otherVegetables: Double
         var berries: Double
@@ -29,26 +29,16 @@ class ServingsManager {
         var wholeGrains: Double
         var legumes: Double
         var nutsAndSeeds: Double
-//
-//        init() {
-//
-//        }
-//
-//        private func getAverage(for type: String) {
-//            let lastSevenDailyServings =
-//        }
 
-        private func getLastWeekDates() -> [Date] {
-            let calendar = Calendar.current
-            var startDate = Date()
-            var lastWeekDates = [Date]()
-            for _ in 1...7 {
-                guard let nextDay = calendar.date(byAdding: .day, value: -1, to: startDate) else { fatalError() }
-                lastWeekDates.append(nextDay)
-                startDate = nextDay
-            }
-            print(lastWeekDates)
-            return lastWeekDates
+        init(leafyVegetables: Double, otherVegetables: Double, berries: Double, otherFruit: Double,
+             wholeGrains: Double, legumes: Double, nutsAndSeeds: Double) {
+            self.leafyVegetables = leafyVegetables
+            self.otherVegetables = otherVegetables
+            self.berries = berries
+            self.otherFruit = otherFruit
+            self.wholeGrains = wholeGrains
+            self.legumes = legumes
+            self.nutsAndSeeds = nutsAndSeeds
         }
 
     }
@@ -101,7 +91,6 @@ class ServingsManager {
         default:
             return 0
         }
-
     }
 
     func fetchToday() -> DailyServing? {
@@ -140,8 +129,41 @@ class ServingsManager {
         servingsHistory.append(serving)
     }
 
-//    func getAverageServings() ->  {
-//
-//    }
+    func fetchWeeklyAverage() -> AverageServing {
+        return AverageServing(leafyVegetables: getAverage(for: "leafyVegetables"),
+                              otherVegetables: getAverage(for: "otherVegetables"),
+                              berries: getAverage(for: "berries"),
+                              otherFruit: getAverage(for: "otherFruit"),
+                              wholeGrains: getAverage(for: "wholeGrains"),
+                              legumes: getAverage(for: "legumes"),
+                              nutsAndSeeds: getAverage(for: "nutsAndSeeds"))
+    }
+
+    private func getAverage(for type: String) -> Double {
+        let lastSevenDailyServings = servingsHistory.suffix(7)
+        let lastWeekDates = getLastWeekDates()
+        var averageServing = 0.0
+
+        for day in lastWeekDates {
+            for serving in lastSevenDailyServings {
+                if Calendar.current.isDate(day, inSameDayAs:serving.date!) {
+                    averageServing += Double(serving.berries)
+                }
+            }
+        }
+        return averageServing
+    }
+
+    private func getLastWeekDates() -> [Date] {
+        let calendar = Calendar.current
+        var startDate = Date()
+        var lastWeekDates = [Date]()
+        for _ in 1...7 {
+            guard let nextDay = calendar.date(byAdding: .day, value: -1, to: startDate) else { fatalError() }
+            lastWeekDates.append(nextDay)
+            startDate = nextDay
+        }
+        return lastWeekDates
+    }
 
 }
