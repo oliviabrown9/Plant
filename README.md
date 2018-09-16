@@ -5,7 +5,7 @@ Track whole food, plant-based diets on iOS.
 ![designPlan](https://user-images.githubusercontent.com/20130899/44318560-b0950b80-a3eb-11e8-9bf7-6b74d46fdb1b.png)
 
 ## Build Instructions
-This project is currently in Swift 4.1 and supports Xcode 9.4.
+This project is currently in Swift 4.2 and supports Xcode 10.
 
 1. Install the latest [Xcode developer tools](https://developer.apple.com/xcode/downloads/) from Apple.
 2. Install [Carthage](https://github.com/Carthage/Carthage#installing-carthage).
