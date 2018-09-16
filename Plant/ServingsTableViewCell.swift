@@ -75,7 +75,7 @@ class ServingsTableViewCell: UITableViewCell {
     }
 
     private func calculateTrackerSectionWidth(for numSections: Int) -> Double {
-        let fullWidth = Double(345)
+        let fullWidth = Double(UIScreen.main.bounds.width - 30)
         let spacingWidth = Double(10 * (numSections - 1))
         let myWidth = (fullWidth - spacingWidth) / Double(numSections)
         return myWidth
